@@ -1,0 +1,81 @@
+name: Verify, collect and deploy weather board
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '25 0 * * *' # ~09:25 KST daily. GitHub's scheduler can slip; the app
+                          # records the actual fetch time, never the scheduled time.
+  workflow_dispatch:
+    inputs:
+      collect:
+        description: '실제 조회를 실행합니다 (public/data/records.json 갱신)'
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Unit tests (engine + weather normalization)
+        run: node --test tests/*.test.mjs
+
+      - name: Verify reference package hashes
+        run: node scripts/verify-assets.mjs
+
+      - name: Scan for secrets
+        run: node scripts/scan-secrets.mjs
+
+      - name: Collect real weather (Open-Meteo, no key required)
+        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.collect)
+        run: node scripts/collect.mjs
+
+      - name: Commit updated public record (if changed)
+        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.collect)
+        run: |
+          git config user.name "weather-board-bot"
+          git config user.email "actions@users.noreply.github.com"
+          if ! git diff --quiet -- public/data/records.json; then
+            git add public/data/records.json
+            git commit -m "collect: daily reading $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            git push
+          else
+            echo "no change to public/data/records.json"
+          fi
+
+      - name: Write build revision
+        run: |
+          mkdir -p public/data
+          echo "{\"revision\":\"${GITHUB_SHA}\"}" > public/data/build.json
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

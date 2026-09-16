@@ -1,0 +1,126 @@
+{
+  "package_id": "aleph-t04-real-information-board-public-contract-v2",
+  "file_count": 17,
+  "all_match": true,
+  "results": [
+    {
+      "path": "README.md",
+      "expected": "b9d0d4c076f8c1e1d9faf1a42d5bea42b0c47e5018e8f46af31f3798adc8d80c",
+      "actual": "b9d0d4c076f8c1e1d9faf1a42d5bea42b0c47e5018e8f46af31f3798adc8d80c",
+      "bytes_expected": 5017,
+      "match": true
+    },
+    {
+      "path": "adapter-reset.example.js",
+      "expected": "94617445e79e165a9cdfb80926c458e70cb61a44c2e856be71b3d3594e6a696a",
+      "actual": "94617445e79e165a9cdfb80926c458e70cb61a44c2e856be71b3d3594e6a696a",
+      "bytes_expected": 7702,
+      "match": true
+    },
+    {
+      "path": "criterion-registry.json",
+      "expected": "f645270a7872f21870846cdb6df1af46c86d315cb16d61b41482ff08f75c1688",
+      "actual": "f645270a7872f21870846cdb6df1af46c86d315cb16d61b41482ff08f75c1688",
+      "bytes_expected": 14360,
+      "match": true
+    },
+    {
+      "path": "fixture-manifest.json",
+      "expected": "97e0e7999135f943912b3ac24d3d2855b2a22a778fde52b455a50dc2e0bc7e68",
+      "actual": "97e0e7999135f943912b3ac24d3d2855b2a22a778fde52b455a50dc2e0bc7e68",
+      "bytes_expected": 1631,
+      "match": true
+    },
+    {
+      "path": "fixture.schema.json",
+      "expected": "022a0f279fc740a04f8c04989cb7fa242456313f826b848224009709b36f9109",
+      "actual": "022a0f279fc740a04f8c04989cb7fa242456313f826b848224009709b36f9109",
+      "bytes_expected": 1869,
+      "match": true
+    },
+    {
+      "path": "fixtures/auth-401.json",
+      "expected": "43137419d6cc220dabb2d2a99e63c369070f8686393d34fd3eea741d0b1ae5fd",
+      "actual": "43137419d6cc220dabb2d2a99e63c369070f8686393d34fd3eea741d0b1ae5fd",
+      "bytes_expected": 591,
+      "match": true
+    },
+    {
+      "path": "fixtures/normal-d1-a.json",
+      "expected": "14bcc9267f40b4bec2ecb87f2886abbe0536905ef6d398d21ab4041f3410f696",
+      "actual": "14bcc9267f40b4bec2ecb87f2886abbe0536905ef6d398d21ab4041f3410f696",
+      "bytes_expected": 939,
+      "match": true
+    },
+    {
+      "path": "fixtures/normal-d1-b.json",
+      "expected": "4a9a688a94acbf8decba59f6f01991121fd03a322364239606f39872bab866b1",
+      "actual": "4a9a688a94acbf8decba59f6f01991121fd03a322364239606f39872bab866b1",
+      "bytes_expected": 982,
+      "match": true
+    },
+    {
+      "path": "fixtures/normal-d2.json",
+      "expected": "8194b41d81838446d99611b34343b12b10afcf8a3e7a56d8a5e5ad6f7afc86f4",
+      "actual": "8194b41d81838446d99611b34343b12b10afcf8a3e7a56d8a5e5ad6f7afc86f4",
+      "bytes_expected": 945,
+      "match": true
+    },
+    {
+      "path": "fixtures/offline.json",
+      "expected": "61760d554088196e2979cfde2509482fc5dfe1f2c5772e92a824ce8dde12446d",
+      "actual": "61760d554088196e2979cfde2509482fc5dfe1f2c5772e92a824ce8dde12446d",
+      "bytes_expected": 539,
+      "match": true
+    },
+    {
+      "path": "fixtures/rate-429.json",
+      "expected": "788652bf624f91d00b35843372bc5c6dcc810712a0bf29e16c0f337052c37a11",
+      "actual": "788652bf624f91d00b35843372bc5c6dcc810712a0bf29e16c0f337052c37a11",
+      "bytes_expected": 643,
+      "match": true
+    },
+    {
+      "path": "fixtures/recover-d2.json",
+      "expected": "fecab12b34fac4d7c053083bad220748fceca88f91e2b5a024907a34e6620b04",
+      "actual": "fecab12b34fac4d7c053083bad220748fceca88f91e2b5a024907a34e6620b04",
+      "bytes_expected": 979,
+      "match": true
+    },
+    {
+      "path": "fixtures/schema-break.json",
+      "expected": "21bef6532b1f9a008fcf2f4d97b7330125eaeb5de8414fafde2bb991a1b935ee",
+      "actual": "21bef6532b1f9a008fcf2f4d97b7330125eaeb5de8414fafde2bb991a1b935ee",
+      "bytes_expected": 918,
+      "match": true
+    },
+    {
+      "path": "fixtures/timeout.json",
+      "expected": "4516eca5129dcce6c43d06d76c37889a9dd27c7d4f70371c63f9d9019db3aceb",
+      "actual": "4516eca5129dcce6c43d06d76c37889a9dd27c7d4f70371c63f9d9019db3aceb",
+      "bytes_expected": 548,
+      "match": true
+    },
+    {
+      "path": "normalized-reading.schema.json",
+      "expected": "fd073a784a38f9965620b51c2c100fb6b2bf0d9b4112c0b5c9d9f6c6703fdaa8",
+      "actual": "fd073a784a38f9965620b51c2c100fb6b2bf0d9b4112c0b5c9d9f6c6703fdaa8",
+      "bytes_expected": 1448,
+      "match": true
+    },
+    {
+      "path": "public-contract.json",
+      "expected": "647d2ea2ce97005aebcbe9ccd62f380bc6efb10967729464bb1df67b3588edeb",
+      "actual": "647d2ea2ce97005aebcbe9ccd62f380bc6efb10967729464bb1df67b3588edeb",
+      "bytes_expected": 3855,
+      "match": true
+    },
+    {
+      "path": "reading-status.schema.json",
+      "expected": "b84ab1cc8430384ce31de6d675d34ac1458bfeaabd9cacd1017c5cac642a7c1e",
+      "actual": "b84ab1cc8430384ce31de6d675d34ac1458bfeaabd9cacd1017c5cac642a7c1e",
+      "bytes_expected": 908,
+      "match": true
+    }
+  ]
+}

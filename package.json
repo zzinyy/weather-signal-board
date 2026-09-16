@@ -1,0 +1,14 @@
+{
+  "name": "weather-signal-board",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "collect": "node scripts/collect.mjs",
+    "verify:assets": "node scripts/verify-assets.mjs",
+    "scan:secrets": "node scripts/scan-secrets.mjs",
+    "start": "npx serve . "
+  }
+}

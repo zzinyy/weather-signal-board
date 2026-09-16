@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌤️</text></svg>" />
+  <meta name="theme-color" content="#0b1220" />
+  <meta name="description" content="서울의 실제 기온을 조회하고 한국 날짜별 기록을 보존하는 정적 웹 앱. 데이터 수신 실패 다섯 종류와 복구를 공개 합성 자료로 재생합니다." />
+  <title>오늘의 서울 날씨판</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">본문으로 이동</a>
+  <header class="topbar">
+    <a class="brand" href="#main">🌤️ <span>오늘의 서울 날씨판<small>WEATHER SIGNAL BOARD</small></span></a>
+    <nav aria-label="주요 메뉴">
+      <a href="#main">현재</a><a href="#records">관측 기록</a><a href="#test">수신 테스트</a>
+    </nav>
+    <span class="top-time">ASIA / SEOUL <strong id="clock">--:--:--</strong></span>
+  </header>
+
+  <main id="main">
+    <section class="page-heading">
+      <div>
+        <p class="eyebrow">SEOUL · 37.5665°N 126.9780°E</p>
+        <h1>지금 서울은 몇 도일까<span class="dot">.</span></h1>
+        <p class="intro">Open-Meteo 공개 예보 API에서 실제 기온을 조회합니다. 값이 안 올 때도 마지막 정상값과 그 이유를 그대로 보여 줍니다.</p>
+      </div>
+      <button id="refresh-btn" class="refresh-button">새로 고침</button>
+    </section>
+
+    <div id="status-strip" class="status-strip" aria-live="polite">
+      <span class="status-main"><strong id="status-title">대기 중</strong></span>
+      <span id="status-detail">오른쪽 버튼으로 첫 조회를 시작하세요.</span>
+      <span id="status-pill" class="pill">—</span>
+    </div>
+    <p id="error-detail" class="error-detail" hidden></p>
+
+    <div class="observation-grid">
+      <section class="panel value-panel">
+        <div class="panel-heading"><span class="eyebrow">PRIMARY SIGNAL</span><h2>서울 기온</h2></div>
+        <div class="value-number"><span id="value-number">—</span><span id="value-unit" class="unit"></span></div>
+        <p id="weather-desc" class="value-caption"></p>
+      </section>
+
+      <section class="panel meta-panel">
+        <div class="panel-heading"><span class="eyebrow">EVIDENCE</span><h2>출처와 시각</h2></div>
+        <dl class="meta-list">
+          <div><dt>출처</dt><dd id="meta-source">—</dd></div>
+          <div><dt>출처 기준 시각</dt><dd id="meta-source-time">—</dd></div>
+          <div><dt>조회 시각</dt><dd id="meta-fetch-time">—</dd></div>
+          <div><dt>기준 시간대</dt><dd id="meta-tz">—</dd></div>
+        </dl>
+      </section>
+    </div>
+
+    <section class="panel records-panel" id="records">
+      <div class="panel-heading"><span class="eyebrow">DAILY OBSERVATIONS</span><h2>하루, 하나의 기록</h2><span id="records-count" class="subtle-tag">00 / 02일</span></div>
+      <p id="collection-note" class="error-detail" hidden></p>
+      <table class="record-table">
+        <thead><tr><th>관측 날짜 (KST)</th><th>기온</th><th>전일 대비</th><th></th></tr></thead>
+        <tbody id="records-body"></tbody>
+      </table>
+      <p class="record-note">공개 보존 기록은 저장소의 일별 수집(GitHub Actions)으로 남기며, 새 시크릿 창에서도 동일하게 보입니다. 이 화면의 &ldquo;새로 고침&rdquo;은 이 브라우저의 현재 값만 갱신하고, 공개 기록에는 영향을 주지 않습니다.</p>
+    </section>
+
+    <details class="panel evidence-panel" id="evidence-panel">
+      <summary>데이터 출처와 원자료 대조 <span class="chev">›</span></summary>
+      <div id="evidence-body">
+        <label for="evidence-select">대조할 기록</label>
+        <select id="evidence-select"><option value="">현재 관측값</option></select>
+        <dl class="meta-list">
+          <div><dt>출처 URL</dt><dd id="evidence-url">—</dd></div>
+          <div><dt>출처 기준 시각</dt><dd id="evidence-source-time">—</dd></div>
+          <div><dt>조회 시각</dt><dd id="evidence-fetch-time">—</dd></div>
+          <div><dt>기준 시간대</dt><dd id="evidence-tz">—</dd></div>
+        </dl>
+        <div class="reconcile">
+          <div>원자료 temperature_2m<strong id="evidence-raw">—</strong></div>
+          <div>정규화·저장값<strong id="evidence-normalized">—</strong></div>
+          <div>화면 표시값<strong id="evidence-displayed">—</strong></div>
+        </div>
+        <p class="small-copy">원본 정밀도를 그대로 저장하고, 화면에서만 소수 첫째 자리로 반올림합니다.</p>
+        <button id="evidence-download" class="secondary-button">선택한 원자료 내려받기</button>
+        <pre id="evidence-json"></pre>
+      </div>
+    </details>
+
+    <section class="panel test-lab" id="test">
+      <div class="panel-heading"><span class="eyebrow">SYNTHETIC · ALEPH FIXTURES</span><h2>수신 테스트 — 실패 다섯 가지와 복구</h2></div>
+      <p class="record-note">아래 값은 합성 시험값(pt)이며 실제 서울 기온(°C)과 절대 섞이지 않습니다. 실제 조회와 같은 저장·검증 함수를 그대로 재사용합니다.</p>
+      <div class="test-status">
+        <span>상태 <strong id="test-status-title">—</strong></span>
+        <span id="test-status-pill" class="pill">—</span>
+        <span>error_code <code id="test-error-code">none</code></span>
+        <span>값 <strong id="test-value">—</strong></span>
+        <span>행 수 <strong id="test-rows">0</strong></span>
+        <span>전일 대비 <strong id="test-delta">—</strong></span>
+        <span>fixture <code id="test-fixture">—</code></span>
+      </div>
+      <div class="test-buttons">
+        <button data-test-action="reset" class="secondary-button">합성 초기화</button>
+        <button data-test-action="normal-d1-a" class="secondary-button">정상 D1-A (100)</button>
+        <button data-test-action="normal-d1-b" class="secondary-button">정상 D1-B (105)</button>
+        <button data-test-action="normal-d2" class="secondary-button">정상 D2 (120, +15)</button>
+      </div>
+      <div class="test-buttons">
+        <button data-test-action="timeout" class="danger-button">느린 응답 (timeout)</button>
+        <button data-test-action="auth" class="danger-button">401/403 (auth)</button>
+        <button data-test-action="rate_limit" class="danger-button">호출 제한 (429)</button>
+        <button data-test-action="offline" class="danger-button">오프라인</button>
+        <button data-test-action="schema_error" class="danger-button">형식 변경</button>
+      </div>
+      <div class="test-buttons">
+        <button data-test-action="recover-d2" class="refresh-button">다시 시도 · 합성 복구</button>
+      </div>
+    </section>
+
+    <footer>
+      <span>🌤️ 오늘의 서울 날씨판 <span class="footer-divider">/</span> 값이 늦거나 틀릴 때도 정직하게</span>
+      <span>기온 값은 공개 API 기준 · <a href="https://open-meteo.com/" target="_blank" rel="noreferrer">Open-Meteo</a> (CC BY 4.0, 키 불필요) · <a id="source-link" href="#" target="_blank" rel="noreferrer">소스 저장소</a></span>
+    </footer>
+  </main>
+
+  <script type="module" src="./app.mjs"></script>
+</body>
+</html>
