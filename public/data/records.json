@@ -4,19 +4,19 @@
     {
       "reading": {
         "signal_id": "seoul-temp",
-        "normalized_value": 19.7,
+        "normalized_value": 25.6,
         "unit": "°C",
         "source_name": "Open-Meteo",
         "source_url": "https://api.open-meteo.com/v1/forecast?latitude=37.5665&longitude=126.978&current=temperature_2m,weather_code,wind_speed_10m&timezone=UTC",
-        "source_time": "2026-09-17T00:15:00Z",
-        "fetched_at": "2026-09-17T00:19:14.801Z",
+        "source_time": "2026-09-17T05:00:00Z",
+        "fetched_at": "2026-09-17T05:05:26.919Z",
         "record_timezone": "Asia/Seoul",
         "record_date": "2026-09-17"
       },
       "raw": {
         "latitude": 37.55,
         "longitude": 127,
-        "generationtime_ms": 0.0782012939453125,
+        "generationtime_ms": 0.09262561798095703,
         "utc_offset_seconds": 0,
         "timezone": "GMT",
         "timezone_abbreviation": "GMT",
@@ -29,17 +29,17 @@
           "wind_speed_10m": "km/h"
         },
         "current": {
-          "time": "2026-09-17T00:15",
+          "time": "2026-09-17T05:00",
           "interval": 900,
-          "temperature_2m": 19.7,
-          "weather_code": 0,
-          "wind_speed_10m": 5.6
+          "temperature_2m": 25.6,
+          "weather_code": 3,
+          "wind_speed_10m": 6.9
         }
       }
     }
   ],
   "collection_status": {
     "error_code": "none",
-    "attempted_at": "2026-09-17T00:19:14.130Z"
+    "attempted_at": "2026-09-17T05:05:26.272Z"
   }
 }
